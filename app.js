@@ -58,11 +58,11 @@ var gcmPost = function (temp, error) {
     var message = new gcm.Message({
         collapseKey: 'demo',
         delayWhileIdle: true,
-        timeToLive: 3,
+        timeToLive: 1,
         data: {
             error: error,
             temperature: temp,
-            message: "hello world"
+            message: "temperature is "
         }
     });
 

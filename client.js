@@ -1,30 +1,19 @@
-var http=require('http');
+var request = require('request');
 
 
 var postData = function() {
     var temperature = Math.floor(Math.random() * 60);
-
-    var request=http.request({
-      'host': 'mysterious-gorge-5071.herokuapp.com',
-      'port': 80,
-      'path': '/temp',
-      'method': 'POST',
-    });
     console.log("posting temperature " + temperature);
-    var dataOut = JSON.stringify({
-      temp: temperature
-    });
-    console.log("data: "+dataOut);
-    request.write(dataOut);
-    //assign callbacks
-    request.on('response', function(response) {
-       console.log('Response status code:'+response.statusCode);
-
-       response.on('data', function(data) {
-         console.log('Body: '+data);
-       });
+    request.post('http://mysterious-gorge-5071.herokuapp.com/temp', {form:{temp:temperature}}
+    , function (error, response, body) {
+      if (!error && response.statusCode == 200) {
+        console.log("it worked!");// Print the google web page.
+      }
+      else {
+        console.log("it failed!");
+      }
     });
 };
-setInterval(postData, 1000*30);
+setInterval(postData, 1000*25);
 
 //make the request object
