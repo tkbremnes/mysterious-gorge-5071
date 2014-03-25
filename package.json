@@ -1,0 +1,15 @@
+{
+  "name": "mysterious-gorge-5071",
+  "version": "0.0.0",
+  "description": "A hackathon project",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "logfmt": "~1.1.1",
+    "express": "~3.5.0"
+  }
+}
