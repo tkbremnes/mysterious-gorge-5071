@@ -22,14 +22,14 @@ app.post('/register', function (req, res) {
     console.log(JSON.stringify(req.body));
     console.log("client registered with regid="+req.body.id);
     registrationIds.push(req.body.id);
-    gcm("hello world");
+    gcmPost("hello world");
 });
 
 app.post('/temp', function(req, res) {
   var temp = req.body.temp;
   if (temp > 30 || temp < 20) {
     console.log("Temp="+temp);
-    gcm(temp);
+    gcmPost(temp);
   }
   else {
     console.log("Ignoring when temp = "+temp);
@@ -37,7 +37,7 @@ app.post('/temp', function(req, res) {
 });
 
 
-var gcm = function (temp) {
+var gcmPost = function (temp) {
     console.log("temp="+temp);
     // or with object values
     var message = new gcm.Message({
