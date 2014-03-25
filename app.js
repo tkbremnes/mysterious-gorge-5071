@@ -19,6 +19,7 @@ app.listen(port, function() {
 app.use(express.static(__dirname + '/public'));
 
 app.post('/register', function (req, res) {
+    console.log(JSON.stringify(req.body));
     console.log("client registered with regid="+req.body.device.id);
     registrationIds.push(req.body.device.id);
 });
