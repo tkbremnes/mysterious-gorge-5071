@@ -26,13 +26,13 @@ app.post('/register', function (req, res) {
 });
 
 app.post('/temp', function(req, res) {
-  console.log(JSON.stringify(req));
   var temp = req.body.temp;
   console.log("Temp="+temp);
   if (!temp) {
     res.end(200);
     return;
   }
+  console.log(JSON.stringify(req.body));
   if (temp > 30) {
     gcmPost(temp, 2);
   }
