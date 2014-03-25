@@ -30,10 +30,10 @@ app.post('/temp', function(req, res) {
   var temp = req.body.temp;
   console.log("Temp="+temp);
   if (!temp) {
+    console.log(JSON.stringify(req.body));
     res.end();
     return;
   }
-  console.log(JSON.stringify(req.body));
   if (temp > 30) {
     gcmPost(temp, 2);
   }
