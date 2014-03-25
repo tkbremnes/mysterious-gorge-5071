@@ -20,8 +20,8 @@ app.use(express.static(__dirname + '/public'));
 
 app.post('/register', function (req, res) {
     console.log(JSON.stringify(req.body));
-    console.log("client registered with regid="+req.body.device.id);
-    registrationIds.push(req.body.device.id);
+    console.log("client registered with regid="+req.body.id);
+    registrationIds.push(req.body.id);
 });
 
 app.post('/temp', function(req, res) {
