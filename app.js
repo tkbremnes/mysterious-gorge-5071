@@ -27,24 +27,32 @@ app.post('/register', function (req, res) {
 
 app.post('/temp', function(req, res) {
   var temp = req.body.temp;
-  if (temp > 30 || temp < 20) {
-    console.log("Temp="+temp);
-    gcmPost(temp);
+  console.log("Temp="+temp);
+  if (temp > 30) {
+    gcmPost(temp, 2);
+  }
+  else if (temp < 20) {
+    gcmPost(temp, 1);
   }
   else {
     console.log("Ignoring when temp = "+temp);
   }
+  res.end(200);
 });
 
 
-var gcmPost = function (temp) {
+var gcmPost = function (temp, error) {
     console.log("temp="+temp);
+    if (!error) {
+      error = 0;
+    }
     // or with object values
     var message = new gcm.Message({
         collapseKey: 'demo',
         delayWhileIdle: true,
         timeToLive: 3,
         data: {
+            error: error,
             temperature: temp,
             message: "hello world"
         }
