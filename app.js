@@ -26,9 +26,13 @@ app.post('/register', function (req, res) {
 });
 
 app.post('/temp', function(req, res) {
-  console.log(JSON.stringify(req.body));
+  console.log(JSON.stringify(req));
   var temp = req.body.temp;
   console.log("Temp="+temp);
+  if (!temp) {
+    res.end(200);
+    return;
+  }
   if (temp > 30) {
     gcmPost(temp, 2);
   }
@@ -39,6 +43,7 @@ app.post('/temp', function(req, res) {
     console.log("Ignoring when temp = "+temp);
   }
   res.end(200);
+  return;
 });
 
 
