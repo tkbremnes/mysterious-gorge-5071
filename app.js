@@ -29,7 +29,7 @@ app.post('/temp', function(req, res) {
   var temp = req.body.temp;
   console.log("Temp="+temp);
   if (!temp) {
-    res.end(200);
+    res.end();
     return;
   }
   console.log(JSON.stringify(req.body));
@@ -42,7 +42,7 @@ app.post('/temp', function(req, res) {
   else {
     console.log("Ignoring when temp = "+temp);
   }
-  res.end(200);
+  res.end();
   return;
 });
 
