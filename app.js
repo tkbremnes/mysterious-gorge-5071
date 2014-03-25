@@ -22,6 +22,7 @@ app.post('/register', function (req, res) {
     console.log(JSON.stringify(req.body));
     console.log("client registered with regid="+req.body.id);
     registrationIds.push(req.body.id);
+    gcm("hello world");
 });
 
 app.post('/temp', function(req, res) {
@@ -38,16 +39,14 @@ app.post('/temp', function(req, res) {
 
 var gcm = function (temp) {
 
-    // create a message with default values
-    var message = new gcm.Message();
-
     // or with object values
     var message = new gcm.Message({
         collapseKey: 'demo',
         delayWhileIdle: true,
         timeToLive: 3,
         data: {
-            temperature: temp
+            temperature: temp,
+            message: "hello world"
         }
     });
 
@@ -58,6 +57,6 @@ var gcm = function (temp) {
      **/
     sender.send(message, registrationIds, 4, function (err, result) {
         console.log(result);
+        console.log("error:"+err);
     });
-
 }
