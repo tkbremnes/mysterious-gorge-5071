@@ -22,6 +22,7 @@ app.post('/register', function (req, res) {
     console.log(JSON.stringify(req.body));
     console.log("client registered with regid="+req.body.id);
     registrationIds.push(req.body.id);
+    res.end();
     gcmPost("hello world");
 });
 
