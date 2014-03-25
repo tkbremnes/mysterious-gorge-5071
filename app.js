@@ -10,7 +10,7 @@ app.use(logfmt.requestLogger());
 // app.get('/', function(req, res) {
 //     res.send('Hello World!');
 // });
-
+var registrationIds = [];
 var port = Number(process.env.PORT || 5000);
 app.listen(port, function() {
     console.log("Listening on " + port);
@@ -18,12 +18,24 @@ app.listen(port, function() {
 
 app.use(express.static(__dirname + '/public'));
 
-app.post('/', function (req, res) {
+app.post('/register', function (req, res) {
+    console.log("client registered with regid="+req.body.device.id);
     registrationIds.push(req.body.device.id);
 });
 
+app.post('/temp', function(req, res) {
+  var temp = req.body.temp;
+  if (temp > 30 || temp < 20) {
+    console.log("Temp="+temp);
+    gcm(temp);
+  }
+  else {
+    console.log("Ignoring when temp = "+temp);
+  }
+});
 
-var gcmThing = function () {
+
+var gcm = function (temp) {
 
     // create a message with default values
     var message = new gcm.Message();
@@ -34,34 +46,11 @@ var gcmThing = function () {
         delayWhileIdle: true,
         timeToLive: 3,
         data: {
-            key1: 'message1',
-            key2: 'message2'
+            temperature: temp
         }
     });
 
     var sender = new gcm.Sender(secrets.google_api_key);
-    var registrationIds = [];
-
-    // OPTIONAL
-    // add new key-value in data object
-    message.addDataWithKeyValue('key1','message1');
-    message.addDataWithKeyValue('key2','message2');
-
-    // or add a data object
-    message.addDataWithObject({
-        key1: 'message1',
-        key2: 'message2'
-    });
-
-    // or with backwards compability of previous versions
-    message.addData('key1','message1');
-    message.addData('key2','message2');
-
-
-    message.collapseKey = 'demo';
-    message.delayWhileIdle = true;
-    message.timeToLive = 3;
-    // END OPTIONAL
 
     /**
      * Params: message-literal, registrationIds-array, No. of retries, callback-function
@@ -71,4 +60,3 @@ var gcmThing = function () {
     });
 
 }
-
