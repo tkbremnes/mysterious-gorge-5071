@@ -31,6 +31,7 @@ app.post('/temp', function(req, res) {
   console.log("Temp="+temp);
   if (!temp) {
     console.log(JSON.stringify(req.body));
+    res.writeHead(400, "temp is undefined!");
     res.end();
     return;
   }
