@@ -38,7 +38,7 @@ app.post('/temp', function(req, res) {
 
 
 var gcm = function (temp) {
-
+    console.log("temp="+temp);
     // or with object values
     var message = new gcm.Message({
         collapseKey: 'demo',
