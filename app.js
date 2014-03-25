@@ -26,6 +26,7 @@ app.post('/register', function (req, res) {
 });
 
 app.post('/temp', function(req, res) {
+  console.log(JSON.stringify(req.body));
   var temp = req.body.temp;
   console.log("Temp="+temp);
   if (temp > 30) {
