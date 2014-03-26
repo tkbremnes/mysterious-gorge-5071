@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html ng-app="appearin-notifier-popup" ng-csp>
+    <head>
+        <title>Appear.in notifier</title>
+    </head>
+    <script src="../config.js"></script>
+    <script src="../libraries/angular/angular-1.2.3.min.js"></script>
+
+    <script src="../scripts/roomName.js"></script>
+    <script src="../scripts/utils.js"></script>
+    <script src="../scripts/tabs.js"></script>
+    <script src="../scripts/appearin-notifier-popup.js"></script>
+    <link href="../libraries/angular/angular-csp-1.2.3.css" rel="stylesheet"/>
+    <style rel="stylesheet" type="text/css">
+        body {
+            width: 300px;
+            font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;;
+        }
+
+        h1 {
+            font-size: 1.2em;
+            color: #2B2B2B;
+        }
+
+        ul, li {
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            list-style: none;
+            font-size: 0.9em;
+            padding: 0.75em;
+            color: #2167AD;
+            border-bottom: 1px solid #CCC;
+        }
+
+
+        a {
+            text-decoration: none;
+        }
+
+        a:visited {
+            color: inherit;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        a:focus {
+            outline: none;
+        }
+        .remove-button {
+            float: right;
+        }
+        .error {
+            color: black;
+            margin: 0.5em 0 0 1em;
+        }
+    </style>
+    <body ng-controller="popupController">
+        <div ng-show="isFollowingRooms()">
+            <h1>Rooms you follow</h1>
+            <ul>
+                <li ng-repeat="(roomName, room) in followedRooms">
+                        <a ng-click="goToRoom(roomName)" href="">{{roomName}}</a> <a class="remove-button" ng-click="unfollowRoom(roomName)" href="">Unfollow</a>
+                        <div class="error">{{getErrorMessage(room.error)}}</div>
+                </li>
+            </ul>
+        </div>
+        <div ng-hide="isFollowingRooms()">
+            Not following any rooms
+        </div>
+    </body>
+</html>

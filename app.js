@@ -3,6 +3,20 @@ var logfmt = require("logfmt");
 var gcm = require('node-gcm');
 var app = express();
 var secrets = require('./secrets.json');
+var io = require('socket.io')();
+io.on('connection', function(socket){});
+io.listen(3000);
+var config = {
+    host: 'http://appear.in',
+    hostname: 'appear.in',
+    timeout: 5 * 1000,
+    reconnectionLimit: 2 * 60 * 1000,
+    connectionRevivalInterval: undefined,
+    maxReconnectionAttempts: Infinity
+};
+
+var client = require('./chrome-notifier/scripts/client.js')
+  .createClient(config, io);
 app.use(express.bodyParser());
 
 app.use(logfmt.requestLogger());

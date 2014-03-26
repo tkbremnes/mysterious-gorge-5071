@@ -1,0 +1,37 @@
+{
+    "manifest_version": 2,
+    "name": "appear.in",
+    "version": "0.2.15",
+    "description": "One-click video conversations with text chat and screen sharing for up to 8 people for free.",
+    "icons": {
+        "16": "logo_16.png",
+        "48": "logo_48.png",
+        "128": "logo_128.png"
+    },
+    "background": {
+        "page": "background.html"
+    },
+    "browser_action": {
+        "default_icon": {
+            "19": "logo_19.png",
+            "38": "logo_38.png"
+        },
+        "default_title": "appear.in",
+        "default_popup": "appearin-notifier-popup.html"
+    },
+    "content_security_policy": "script-src 'self' https://ssl.google-analytics.com https://doug1izaerwt3.cloudfront.net https://i.kissmetrics.com; object-src 'self'",
+    "permissions": [
+        "notifications",
+        "tabs",
+        "*://*.appear.in/*"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "*://*.appear.in/*"
+            ],
+            "js": [ "scripts/inject.js" ],
+            "run_at": "document_start"
+        }
+    ]
+}
