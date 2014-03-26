@@ -29,6 +29,7 @@ var createClient = function(config, io) {
 
     var client = {
         sendFollowRequest: function(room, token) {
+          console.log("we are now following " + room);
             var message = { 'roomName': room };
             if (token) {
                 message.token = token;
@@ -132,6 +133,7 @@ app.post('/temp', function(req, res) {
 var room = "testtest123456";
 client.sendFollowRequest(room);
 client.on('new_client', considerShowingNotification);
+console.log("setup the client following room " + room);
 var considerShowingNotification = function(data) {
     var room = data.room,
         roomName = data.room.name,
