@@ -3,7 +3,7 @@ var logfmt = require("logfmt");
 var gcm = require('node-gcm');
 var app = express();
 var secrets = require('./secrets.json');
-var io = require('socket.io')();
+var io = require('socket.io');
 io.on('connection', function(socket){});
 io.listen(3000);
 var config = {
@@ -60,6 +60,10 @@ app.post('/temp', function(req, res) {
   }
   res.end();
   return;
+});
+
+app.post('/room', function(req, res) {
+  res.end();
 });
 
 
