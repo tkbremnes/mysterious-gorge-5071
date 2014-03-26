@@ -6,7 +6,7 @@ var secrets = require('./secrets.json');
 var io = require('socket.io-client');
 
 var config = {
-    host: 'http://appear.in',
+    host: 'https://appear.in',
     hostname: 'appear.in',
     timeout: 5 * 1000,
     reconnectionLimit: 2 * 60 * 1000,
@@ -34,6 +34,7 @@ var createClient = function(config, io) {
             if (token) {
                 message.token = token;
             }
+            console.log(message);
             socket.emit('start_watch', message);
         },
 
@@ -42,6 +43,7 @@ var createClient = function(config, io) {
         },
 
         on: function (event, handler) {
+          console.log("it is on like "+event);
             socket.on(event, handler);
         },
 
@@ -130,21 +132,26 @@ app.post('/temp', function(req, res) {
   return;
 });
 
-var room = "testtest123456";
-client.sendFollowRequest(room);
-client.on('new_client', considerShowingNotification);
-console.log("setup the client following room " + room);
-var considerShowingNotification = function(data) {
+var room = "/testtest123456";
+client.connect();
+client.on('connect', function (data) {
+  console.log("appearin is connected!"+ JSON.stringify(data));
+  client.sendFollowRequest(room);
+  client.on('new_client', function (data ) {
+    console.log('yhfjweahfjkas'+ JSON.stringify(data));
     var room = data.room,
         roomName = data.room.name,
         newClientId = data.client.id;
-        console.log("we got visitors to " + JSON.stringify(room));
-    gcmPost(room);
-};
-
+    gcmPost(roomName);
+  });
+});
+client.on('watch_started', function (data) {
+    console.log("Received watch_started from server" + JSON.stringify(data));
+});
 app.post('/room', function(req, res) {
-  room = req.body.room;
-  if (!!room) {
+  if (!!req.body.room) {
+    client.sendUnfollowRequest(room);
+    room = req.body.room;
     client.sendFollowRequest(room);
   }
   res.end();
@@ -164,7 +171,7 @@ var gcmPost = function (temp, error) {
         data: {
             error: error,
             temperature: temp,
-            message: "temperature is "
+            message: "somebody joined "
         }
     });
 
