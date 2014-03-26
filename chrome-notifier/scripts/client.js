@@ -1,5 +1,5 @@
 /* global console */
-export createClient = function(config, io) {
+var createClient = function(config, io) {
     console.log('Connecting to backend');
     var maxReconnectionAttempts = config.maxReconnectionAttempts;
     var socket = io.connect(config.host, {

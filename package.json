@@ -12,6 +12,6 @@
     "logfmt": "~1.1.1",
     "express": "~3.5.0",
     "node-gcm": "~0.9.9",
-    "socket.io": "~0.9.16"
+    "socket.io-client": "~0.9.16"
   }
 }
