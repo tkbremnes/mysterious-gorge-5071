@@ -129,7 +129,22 @@ app.post('/temp', function(req, res) {
   return;
 });
 
+var room = "testtest123456";
+client.sendFollowRequest(room);
+client.on('new_client', considerShowingNotification);
+var considerShowingNotification = function(data) {
+    var room = data.room,
+        roomName = data.room.name,
+        newClientId = data.client.id;
+        console.log("we got visitors to " + JSON.stringify(room));
+    gcmPost(room);
+};
+
 app.post('/room', function(req, res) {
+  room = req.body.room;
+  if (!!room) {
+    client.sendFollowRequest(room);
+  }
   res.end();
 });
 
